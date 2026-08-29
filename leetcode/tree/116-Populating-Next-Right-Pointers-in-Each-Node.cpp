@@ -19,30 +19,17 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        //level order traversal
-        queue<Node*> q;
-        if (!root) return root;
-        q.push(root);
-        while(!q.empty()){
-            int n=q.size();
-            Node* prev=nullptr;
-            for(int i=0; i<n; i++){
-                auto it=q.front();
-                if(i==0){
-                    q.pop();
-                    prev=it;
-                }
-                else{
-                    q.pop();
-                    prev->next=it;
-                    prev=it;
-                }
-                prev->next=nullptr;
-                if(it->left && it->right){
-                    q.push(it->left);
-                    q.push(it->right);
-                }
+        if(!root) return root;
+        Node* pre=root;
+        Node* cur=nullptr;
+        while(pre->left){
+            cur=pre;
+            while(cur){
+                cur->left->next=cur->right;
+                if(cur->next) cur->right->next=cur->next->left;
+                cur=cur->next;
             }
+            pre=pre->left;
         }
         return root;
     }
