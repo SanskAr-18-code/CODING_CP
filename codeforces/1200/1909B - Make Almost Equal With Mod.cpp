@@ -21,37 +21,22 @@ void solve()
     int n;
     cin >> n;
     vector<ll> arr(n);
-    int even = 0;
-    int odd = 0;
-    for (int i = 0; i < n; i++)
+    for(int i=0; i<n; i++) cin>>arr[i];
+    ll i = 2;
+    while (1)
     {
-        cin >> arr[i];
-        if (arr[i] % 2 == 0)
-            even++;
-        else
-            odd++;
-    }
-    if (even != 0 && odd != 0)
-    {
-        cout << 2 << endl;
-    }
-    else
-    {
-        ll i = 4;
-        while (1)
+        unordered_set<ll> rem;
+        for (int k = 0; k < n; k++)
         {
-            set<ll> rem;
-            for (int k = 0; k < n; k++)
-            {
-                rem.insert(arr[k] % i);
-            }
-            if (rem.size() == 2)
-            {
-                cout << i << endl;
-                return;
-            }
-            i *= 2;
+            rem.insert(arr[k] % i);
+            if(rem.size()>2) break;
         }
+        if (rem.size() == 2)
+        {
+            cout << i << endl;
+            return;
+        }
+        i *= 2;
     }
 }
 
