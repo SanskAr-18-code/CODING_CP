@@ -17,11 +17,11 @@ public:
     void invert(TreeNode* root){
         if(!root) return;
         if(isleaf(root)) return;
-        invert(root->left);
         TreeNode* temp=root->left;
         root->left=root->right;
         root->right=temp; 
-        invert(root->left); 
+        invert(root->left);
+        invert(root->right); 
         
     }
     TreeNode* invertTree(TreeNode* root) {
