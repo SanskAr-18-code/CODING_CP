@@ -11,22 +11,21 @@
  */
 class Solution {
 public:
+    bool isleaf(TreeNode* root){
+        return (!root->left && !root->right);
+    }
+    void invert(TreeNode* root){
+        if(!root) return;
+        if(isleaf(root)) return;
+        invert(root->left);
+        invert(root->right); 
+        TreeNode* temp=root->left;
+        root->left=root->right;
+        root->right=temp; 
+    }
     TreeNode* invertTree(TreeNode* root) {
-        queue<TreeNode*> q;
         if(!root) return root;
-        q.push(root);
-        while(!q.empty()){
-            int n=q.size();
-            for(int i=1; i<=n; i++){
-                auto it=q.front();
-                q.pop();
-                TreeNode* temp=it->left;
-                it->left=it->right;
-                it->right=temp;
-                if(it->left) q.push(it->left);
-                if(it->right) q.push(it->right);
-              } 
-        }
+        invert(root);
         return root;
-    } 
+    }
 };
