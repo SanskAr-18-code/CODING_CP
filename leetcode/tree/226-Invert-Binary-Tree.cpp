@@ -18,10 +18,11 @@ public:
         if(!root) return;
         if(isleaf(root)) return;
         invert(root->left);
-        invert(root->right); 
         TreeNode* temp=root->left;
         root->left=root->right;
         root->right=temp; 
+        invert(root->left); 
+        
     }
     TreeNode* invertTree(TreeNode* root) {
         if(!root) return root;
