@@ -38,7 +38,7 @@ public:
                 tail->next = prev;
 
             tail = listtail;
-            tail->next = cur;
+            // tail->next = cur;
         }
 
         return head;
