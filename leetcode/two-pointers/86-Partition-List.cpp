@@ -30,9 +30,8 @@ public:
             }
             cur = nxt;
         }
-        ListNode dummy(0);
-        ListNode* tail = &dummy;
-
+        ListNode* dummy=new ListNode(0);
+        ListNode* tail=dummy;            
         while (!q.empty()) {
             tail->next = q.front();
             tail = tail->next;
@@ -40,6 +39,6 @@ public:
         }
 
         tail->next = head;
-        return dummy.next;
+        return dummy->next;
     }
 };
