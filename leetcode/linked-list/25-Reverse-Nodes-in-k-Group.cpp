@@ -1,51 +1,46 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        stack<ListNode*> st;
-        ListNode* temp;
-        vector<ListNode*> vec;
-        while (head) {
-            temp = head;
-            st.push(head);
-            head = head->next;
-            temp->next = nullptr;
-            if (st.size() == k) {
-                while (!st.empty()) {
-                    auto it = st.top();
-                    vec.push_back(it);
-                    st.pop();
-                }
+
+        ListNode* cur = head;
+        ListNode* prev = nullptr;
+
+        int cnt = 0;
+        ListNode* tail = nullptr;
+
+        while (cur) {
+            ListNode* check = cur;
+            int nodes = 0;
+            while (check && nodes < k) {
+                check = check->next;
+                nodes++;
             }
-        }
-        stack<ListNode*> nst;
-        while (!st.empty()) {
-            auto it = st.top();
-            nst.push(it);
-            st.pop();
-        }
-        while (!nst.empty()) {
-                    auto it = nst.top();
-                    vec.push_back(it);
-                    nst.pop();
-                }
+            if (nodes < k) {
+                if (tail)
+                    tail->next = cur;
+                break;
+            }
+            int t = k;
+            ListNode* listtail = cur;
+            prev = nullptr;
 
-        if (vec.empty())
-            return nullptr;
+            while (cur && t--) {
+                ListNode* nextnode = cur->next;
+                cur->next = prev;
+                prev = cur;
+                cur = nextnode;
+            }
+            if (cnt == 0) {
+                head = prev;
+                cnt++;
+            }
+            if (tail)
+                tail->next = prev;
 
-        for (int i = 1; i < vec.size(); i++) {
-            vec[i - 1]->next = vec[i];
+            tail = listtail;
+            tail->next = cur;
         }
-        vec[vec.size() - 1]->next = nullptr;
-        return vec[0];
+
+        return head;
     }
 };
