@@ -68,8 +68,9 @@ class Solution {
                     vis[mp[it]]=true;
                 }
             }
-            if(flag) ans++;
+            // if(flag) ans++;
+            ans++;
         }
-        return ans;
+        return ans-1;
     }
 };
