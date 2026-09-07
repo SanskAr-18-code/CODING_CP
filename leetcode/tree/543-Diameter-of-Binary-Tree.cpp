@@ -11,25 +11,20 @@
  */
 class Solution {
 public:
+    int res=0;
     int maxdepth(TreeNode* root){
         if(!root) return 0;
 
         int left=maxdepth(root->left);
         int right=maxdepth(root->right);
+
+        res=max(res,left+right);
+
         return 1+max(left,right);
     }
-    void traversal(TreeNode* root,int &dia){
-        if(!root) return ;
-        int left=maxdepth(root->left);
-        int right=maxdepth(root->right);
-        int cur=left+right;
-        dia=max(dia,cur);
-        traversal(root->left,dia);
-        traversal(root->right,dia);
-    }
     int diameterOfBinaryTree(TreeNode* root) {
-        int dia=INT_MIN;
-        traversal(root,dia);
-        return dia;
+        if(!root) return 0;
+        maxdepth(root);
+        return res;
     }
 };
