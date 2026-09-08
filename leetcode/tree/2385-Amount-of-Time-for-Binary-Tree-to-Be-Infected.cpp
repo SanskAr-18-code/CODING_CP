@@ -47,17 +47,18 @@ public:
             for(int i=0; i<n; i++){
                 auto it=q.front();
                 q.pop();
+                vis[it]=true;
                 if(it->left && !vis[it->left]){
                     q.push(it->left);
-                    vis[it->left]=true;
+                    // vis[it->left]=true;
                 }
                 if(it->right && !vis[it->right]){
                     q.push(it->right);
-                    vis[it->right]=true;
+                    // vis[it->right]=true;
                 }
                 if(mp[it] && !vis[mp[it]]){
                     q.push(mp[it]);
-                    vis[mp[it]]=true;
+                    // vis[mp[it]]=true;
                 }
             }
             ans++;
