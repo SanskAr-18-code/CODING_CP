@@ -4,13 +4,13 @@ public:
         // bfs traversal
         int n = grid.size();
         int m = grid[0].size();
-        vector<vector<bool>> vis(n, vector<bool>(m, false));
+        
         queue<pair<int, int>> q;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 2) {
                     q.push({i, j});
-                    vis[i][j] = false;
+                    
                 }
             }
         }
@@ -25,11 +25,9 @@ public:
                 for (int i = 0; i < 4; i++) {
                     int nr = it.first + dr[i];
                     int nc = it.second + dr[i + 1];
-                    if (nr >= 0 && nr < n && nc >= 0 && nc < m &&
-                        !vis[nr][nc] && grid[nr][nc] == 1) {
+                    if (nr >= 0 && nr < n && nc >= 0 && nc < m  && grid[nr][nc] == 1) {
                         flag = true;
                         grid[nr][nc] = 2;
-                        vis[nr][nc] = true;
                         q.push({nr, nc});
                     }
                 }
@@ -41,14 +39,10 @@ public:
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 1) {
-                    possible = false;
-                    break;
+                    return -1;
                 }
             }
         }
-        if (possible) {
-            return ans;
-        }
-        return -1;
+        return ans;
     }
 };
