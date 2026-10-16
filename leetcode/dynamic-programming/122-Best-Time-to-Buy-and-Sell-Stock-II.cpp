@@ -1,25 +1,27 @@
 class Solution {
-private:
-    int profit(int idx, vector<int>& arr, bool canbuy,vector<vector<int>>& dp) {
-        if (idx == arr.size())
-            return 0;
-        if (dp[idx][canbuy] != -1)
-            return dp[idx][canbuy];
-        if (canbuy) {
-            int take = -arr[idx] + profit(idx + 1, arr, false, dp);
-            int nottake = profit(idx + 1, arr, true, dp);
-            return dp[idx][canbuy] = max(take, nottake);
-        } else {
-            int take = arr[idx] + profit(idx + 1, arr, true, dp);
-            int nottake = profit(idx + 1, arr, false, dp);
-            return dp[idx][canbuy] = max(take, nottake);
-        }
-    }
-
 public:
+    int f(vector<int> &prices,int i,bool canbuy,vector<vector<int>> &dp){
+        if(i>=prices.size()) return 0;
+
+        if(dp[i][canbuy]!=-1) return dp[i][canbuy];
+        if(canbuy){
+            int take=-prices[i]+f(prices,i+1,!canbuy,dp);
+            int nottake=f(prices,i+1,canbuy,dp);
+            
+            return dp[i][canbuy]= max(take,nottake);
+        }
+        else{
+            int take=prices[i]+f(prices,i+1,!canbuy,dp);
+            int nottake=f(prices,i+1,canbuy,dp);
+
+            return dp[i][canbuy]= max(take,nottake);
+        }
+
+    }
     int maxProfit(vector<int>& prices) {
-        int n = prices.size();
-        vector<vector<int>> dp(n, vector<int>(2, -1));
-        return profit(0, prices, true, dp);
+        int n=prices.size();
+        vector<vector<int>> dp(n,vector<int>(2,-1));
+
+        return f(prices,0,true,dp);
     }
 };
