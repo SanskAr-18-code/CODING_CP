@@ -16,14 +16,16 @@ using pii = pair<int, int>;
 const ll MOD = 1e9 + 7;
 const ll INF = 1e18;
 
-int ways(int idx, vector<int> &arr, vector<int> &dp)
-{
-    if(idx>=arr.size()){
-        return 0;
-    }
-    if(dp[idx]!=-1) return dp[idx];
-    return dp[idx]=arr[idx]+ways(idx+arr[idx],arr,dp);
-}
+// int ways(int idx, vector<int> &arr, vector<int> &dp)
+// {
+//     if (idx >= arr.size())
+//     {
+//         return 0;
+//     }
+//     if (dp[idx] != -1)
+//         return dp[idx];
+//     return dp[idx] = arr[idx] + ways(idx + arr[idx], arr, dp);
+// }
 void solve()
 {
     int n;
@@ -33,11 +35,16 @@ void solve()
     {
         cin >> arr[i];
     }
-    int ans = INT_MIN;
-    vector<int> dp(n + 1, -1);
-    for (int i = 0; i < n; i++)
-    {
-        ans = max(ans, ways(i, arr, dp));
+    vector<int> dp(n,0);
+    int ans=0;
+    for(int i=n-1; i>=0; i--){
+        int next=arr[i]+i;
+
+        dp[i]=arr[i];
+        if(next<n){
+            dp[i]+=dp[next];
+        }
+        ans=max(ans,dp[i]);
     }
     cout<<ans<<endl;
 }
