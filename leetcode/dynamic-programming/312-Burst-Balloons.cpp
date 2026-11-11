@@ -15,7 +15,21 @@ public:
         nums.insert(nums.begin(),1);
         nums.insert(nums.end(),1);
 
-        vector<vector<int>> dp(nums.size() ,vector<int> (nums.size(),-1));
-        return helper(0,nums.size()-1,nums,dp);
+        vector<vector<int>> dp(nums.size() ,vector<int> (nums.size(),0));
+        // return helper(0,nums.size()-1,nums,dp);
+        //Tabulation
+
+        for(int i=nums.size()-2; i>=0; i--){
+            for(int j=i+2; j<nums.size(); j++){
+                int ans=INT_MIN;
+                for(int k=i+1; k<j; k++){
+                    int cur=nums[i]*nums[j]*nums[k]+dp[i][k]+dp[k][j];
+
+                    if(ans<cur) ans=cur;
+                }
+                dp[i][j]=ans;
+            }
+        }
+        return dp[0][nums.size()-1];
     }
 };
