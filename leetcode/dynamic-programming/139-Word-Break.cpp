@@ -24,8 +24,21 @@ public:
             mp[wordDict[i]]=true;
         }
 
-        dp.assign(s.size(), -1);
+        dp.assign(s.size()+1, false);
 
-        return helper(0,s);
+        // return helper(0,s);
+        dp[s.size()]=true;
+        for(int i=n-1; i>=0; i--){
+            string cur="";
+            for(int k=i; k<n; k++){
+                cur+=s[k];
+                if(mp.count(cur)){
+                    if(dp[k+1]){
+                        dp[i]=true;
+                    }
+                }
+            }
+        }
+        return dp[0];
     }
 };
